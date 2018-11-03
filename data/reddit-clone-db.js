@@ -1,5 +1,7 @@
 /* Mongoose Connection */
 const mongoose = require("mongoose");
+mongoose.Promise = global.Promise
+
 assert = require("assert");
 
 const url = "mongodb://localhost/reddit-clone-db";
@@ -7,6 +9,7 @@ mongoose.Promise = global.Promise;
 mongoose.connect(
   url,
   { useNewUrlParser: true },
+  { userMongoClient: true},
   function(err, db) {
     assert.equal(null, err);
     console.log("Connected successfully to database");

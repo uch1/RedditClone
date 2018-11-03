@@ -12,4 +12,12 @@ module.export = app => {
         })
     })
 
+    app.get('/', (req, res) => {
+        Post.find({}).then(posts => {
+            res.render("layouts/posts-index", { posts: posts })
+        }).catch(err => {
+            console.log("Failed to render posts-index: ", err.message)
+        })
+    })
+
 }
