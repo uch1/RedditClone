@@ -5,7 +5,7 @@ mongoose.Promise = global.Promise
 assert = require("assert");
 
 const url = "mongodb://localhost/reddit-clone-db";
-mongoose.Promise = global.Promise;
+
 mongoose.connect(
   url,
   { useNewUrlParser: true },

@@ -1,13 +1,15 @@
 <!-- Post Index -->
 <div class="container">
-    {{{body}}}
     <div class="row">
         <div class="col-sm-8 col-sm-offset-2">
             <ul>
                 {{#each posts}}
                 <li class="list-group-item">
                     <div class="lead">{{this.title}}</div>
-                    <a href="{{this.url}}" target="_blank">{{this.url}}</a>
+                    <a href="{{post.url}}" target="_blank">{{this.url}}<a>
+                    <div class="text-right">
+                    <a href="/n/{{post.subreddit}}">{{this.subreddit}}<a>
+                    </div>
                 </li>
                 {{/each}}
             </ul>

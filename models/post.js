@@ -7,7 +7,8 @@ const Post = new Schema({
     updatedAt: { type: Date },
     title: { type: String, required: true },
     url: { type: String, required: true },
-    summary: { type: String, required: true }
+    summary: { type: String, required: true },
+    subreddit: { type: [String], required: true }
 })
 
 Post.pre('save', (next) => {
