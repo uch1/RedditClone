@@ -1,4 +1,5 @@
-const Comment = require('./models/comment.js')
+const Comment = require('./models/comment')
+const Post = require('./models/post')
 
 module.exports = (app) => {
 
@@ -9,10 +10,15 @@ module.exports = (app) => {
         comment
             .save()
             .then(comment => {
-                return res.redirect('/')
+                return Post.findById(req.params.postId)
+            })
+            .then(post => {
+                post.comments.unshift(comment)
+                post.save()
+                return res.redirect(`/posts/${req.params.postId}`)
             })
             .catch(err => {
-                console.log("Failed to create a comment and redirect user: ", err)
+                console.log("Failed to create a comment and redirect user: ", err.meassage)
             })
 
     })
