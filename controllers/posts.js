@@ -45,7 +45,7 @@ module.exports = (app) => {
             res.render("posts-index", { posts: posts });
           })
           .catch(err => {
-            console.log(err);
+            console.log("Failed to get a subreddit: ", err);
           });
     });
 
