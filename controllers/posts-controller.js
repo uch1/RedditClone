@@ -31,7 +31,7 @@ module.exports = (app) => {
     app.get('/posts/:id', (req, res) => {
         // Look up the post
         console.log('hitting post :id')
-        Post.findById(req.params.id).then(post => {
+        Post.findById(req.params.id).populate('comments').then(post => {
             res.render("post-show", { post: post })
         }).catch(err => {
             console.log("Failed to show a post: ", err.message)
