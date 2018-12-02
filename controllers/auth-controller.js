@@ -1,6 +1,7 @@
 const User = require('../models/user')
 const jwt = require('jsonwebtoken')
 
+
 module.exports = (app) => {
 
     app.get('/sign-up', (req, res) => {
@@ -16,10 +17,13 @@ module.exports = (app) => {
         user
             .save()
             .then(user => {
+                var token = jwt.sign( { _id: user._id }, process.env.SECRET, { expires: "60 days"})
+                res.cookie('nToken', token, { maxAge: 900000, httpOnly: true })
                 res.redirect('/')
             })
             .catch(err => {
                 console.log(err.message)
+                return res.status(400).send({err: err})
             })
         // newUser.save(function (err) {
         //     if (err) console.log(err)
@@ -28,4 +32,10 @@ module.exports = (app) => {
         //     res.render
         // })
     })
+
+    // LOGOUT 
+    app.get('/logout', (req, res) => {
+        res.clearCookie('nToken')
+        res.redirect('/')
+    }) 
 }
