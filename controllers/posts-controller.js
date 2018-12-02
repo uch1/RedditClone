@@ -5,11 +5,17 @@ module.exports = (app) => {
 
     // CREATE
     app.post('/posts', (req, res) => {
-        console.log('hitting route: /posts')
-        const post = Post(req.body)
-        post.save((post, err) => {
-            return res.redirect(`/`)
-        })
+        if (req.user) {
+            console.log('hitting route: /posts')
+
+            const post = new Post(req.body)
+            post.save((post, err) => {
+                return res.redirect(`/`)
+            })
+        } else {
+            return res.status(401) // Unauthorized 
+        }
+        
     })
 
     // SHOW Post Form
@@ -20,8 +26,10 @@ module.exports = (app) => {
 
     // INDEX
     app.get('/', (req, res) => {
+        var currentUser = req.user 
+
         Post.find({}).then(posts => {
-            res.render("posts-index", { posts: posts })
+            res.render("posts-index", { posts: posts, currentUser })
         }).catch(err => {
             console.log("Failed to render posts-index: ", err.message)
         })

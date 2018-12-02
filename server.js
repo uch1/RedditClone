@@ -7,8 +7,21 @@ const expressValidator = require('express-validator')
 var cookieParser = require('cookie-parser')
 const server = express()
 
-// BODY PARSER
+var checkAuth = (req, res, next) => {
+    console.log("Checking authentication");
+    if (typeof req.cookies.nToken === "undefined" || req.cookies.nToken === null) {
+      req.user = null;
+    } else {
+      var token = req.cookies.nToken;
+      var decodedToken = jwt.decode(token, { complete: true }) || {};
+      req.user = decodedToken.payload;
+    }
+  
+    next();
+  };
 
+// BODY PARSER
+server.use(checkAuth)
 server.use(cookieParser())
 server.use(bodyParser.urlencoded({ extended: true }))
 server.use(bodyParser.json())

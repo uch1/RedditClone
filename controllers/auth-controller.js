@@ -4,6 +4,7 @@ const jwt = require('jsonwebtoken')
 
 module.exports = (app) => {
 
+
     // SIGN UP 
     app.get('/sign-up', (req, res) => {
         console.log("Auth Controller: " + req.body)
@@ -14,10 +15,21 @@ module.exports = (app) => {
         console.log("Post request", req.body)
 
         const user = new User(req.body);
+        // const password = req.body.password
+        // const confirmedPassword = req.body.confirmedPassword
 
         user
             .save()
             .then(user => {
+                
+                // if (password == "") {
+                //     res.render('signup-form', { err: "Password is required" })
+                // }
+
+                // if (password !== confirmedPassword) {
+                //     res.render('signup-form', { err: "Passwords do not match" })
+                // }
+
                 var token = jwt.sign( { _id: user._id }, process.env.SECRET, { expires: "60 days"})
                 res.cookie('nToken', token, { maxAge: 900000, httpOnly: true })
                 res.redirect('/')
