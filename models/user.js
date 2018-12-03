@@ -8,6 +8,7 @@ const User = new Schema({
     updatedAt: { type: Date },
     username: { type: String, required: true },
     password: { type: String, select: false },
+    posts : [{ type: Schema.Types.ObjectId, ref: "Post" }]
 })
 
 User.pre("save", function(next) {

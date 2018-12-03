@@ -8,6 +8,7 @@ var cookieParser = require('cookie-parser')
 const server = express()
 
 var checkAuth = (req, res, next) => {
+
     console.log("Checking authentication");
     if (typeof req.cookies.nToken === "undefined" || req.cookies.nToken === null) {
       req.user = null;
@@ -19,6 +20,14 @@ var checkAuth = (req, res, next) => {
   
     next();
   };
+
+var checkCurrentUser = (req, res, next) => {
+    if (req.user) {
+        next()
+    } else {
+        return res.status(401);
+    }
+};
 
 // BODY PARSER
 server.use(checkAuth)
