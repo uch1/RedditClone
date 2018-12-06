@@ -13,6 +13,16 @@ const Post = require('./models/post')
 // Check that the response is a successful
 
 describe("Post", () => {
+
+    before(done => {
+        agent
+          .post("/login")
+          .send({ username: "testone", password: "password" })
+          .end(function(err, res) {
+            done();
+          });
+    });
+
     it("should create with valid attributes at POST /posts", done => {
         Post.find((err, posts) => {
             var postCount = posts.count
