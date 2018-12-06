@@ -8,7 +8,7 @@ module.exports = (app) => {
     // SIGN UP 
     app.get('/sign-up', (req, res) => {
         console.log("Auth Controller: " + req.body)
-        res.render("sign-up")
+        res.render("signup-form")
     })
 
     app.post('/sign-up', (req, res) => {
@@ -36,7 +36,7 @@ module.exports = (app) => {
             })
             .catch(err => {
                 console.log(err.message)
-                return res.status(400).send({err: err})
+                return res.status(400).send({err: err.message})
             })
         // newUser.save(function (err) {
         //     if (err) console.log(err)
@@ -54,6 +54,8 @@ module.exports = (app) => {
     app.post('/login', (req, res) => {
         const username = req.body.username
         const password = req.body.password
+        console.log("SecretOrPrivateKey's value: ", process.env.SECRET)
+
 
         // Find this username 
         User.findOne({ username }, "username password")

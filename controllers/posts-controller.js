@@ -64,7 +64,7 @@ module.exports = (app) => {
                 res.render("post-show", { post: post, currentUser })
             })
             .catch(err => {
-                console.log("Failed to show a post: ", err.message)
+                console.log("[/posts/:id] Failed to show a post: ", err.message)
             })
     })
 

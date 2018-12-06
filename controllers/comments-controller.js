@@ -4,7 +4,7 @@ const Post = require('../models/post')
 module.exports = (app) => {
 
     // CREATE
-    app.post('/post/:postId/comments', (req, res) => {
+    app.post('/posts/:postId/comments', (req, res) => {
         const comment = new Comment(req.body)
 
         comment
@@ -20,9 +20,8 @@ module.exports = (app) => {
             .catch(err => {
                 console.log("Failed to create a comment and redirect user: ", err.meassage)
             })
-
     })
 
-
+    
 
 }

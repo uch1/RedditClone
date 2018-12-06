@@ -1,6 +1,9 @@
 const chai = require("chai");
 const chaiHttp = require("chai-http");
 const should = chai.should();
+chai.use(chaiHttp)
+
+var agent = chai.request.agent(server)
 
 const Post = require('./models/post')
 

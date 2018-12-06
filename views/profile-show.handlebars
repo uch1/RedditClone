@@ -1,0 +1,27 @@
+<div class="row">
+  <div class="col-sm-6 col-sm-offset-3">
+    {{#each user}} 
+        <div class="lead">{{this.username}}</div>
+        
+        <div class="lead">Posts:</div>
+        {{#each this.posts}}
+            <div class="card text-white bg-primary mb-3" style="width: 18rem;">
+                <div class="card-body">
+                    <h5 class="card-title">{{this.title}}</h5>
+                    <p class="card-text">{{this.summary}}</p>
+                </div>
+            </div>
+        {{/each}}
+
+        <div class="lead">Comments</div>
+        {{#each this.comments}}
+            <div class="card text-white bg-dark mb-3" style="width: 18rem;">
+                <div class="card-body">
+                    <p class="card-text">{{this.content}}</p>
+                </div>
+            </div>
+        {{/each}}
+    {{/each}}
+  </div>
+  
+</div>

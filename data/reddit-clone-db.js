@@ -9,7 +9,7 @@ const url = "mongodb://localhost/reddit-clone-db";
 mongoose.connect(
   url,
   { useNewUrlParser: true },
-  { userMongoClient: true},
+  { userMongoClient: true },
   function(err, db) {
     assert.equal(null, err);
     console.log("Connected successfully to database");

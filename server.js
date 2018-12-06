@@ -1,11 +1,13 @@
 // NODE LIBRARIES
 const express = require('express')
+require('dotenv').config()
 const bodyParser = require('body-parser')
 const exphbs = require('express-handlebars')
 const methodOverride = require('method-override')
 const expressValidator = require('express-validator')
 var cookieParser = require('cookie-parser')
 const server = express()
+const jwt = require('jsonwebtoken')
 
 var checkAuth = (req, res, next) => {
 
@@ -14,12 +16,14 @@ var checkAuth = (req, res, next) => {
       req.user = null;
     } else {
       var token = req.cookies.nToken;
+
       var decodedToken = jwt.decode(token, { complete: true }) || {};
       req.user = decodedToken.payload;
+      res.locals.currentUser = req.user 
     }
   
     next();
-  };
+};
 
 var checkCurrentUser = (req, res, next) => {
     if (req.user) {
@@ -29,15 +33,19 @@ var checkCurrentUser = (req, res, next) => {
     }
 };
 
+var hideHTMLElement = (req, res, next) => {
+
+}
+
 // BODY PARSER
-server.use(checkAuth)
+
 server.use(cookieParser())
 server.use(bodyParser.urlencoded({ extended: true }))
 server.use(bodyParser.json())
 server.use(expressValidator())
-
 server.use(methodOverride('_method'))
 server.use(express.static('public'))
+server.use(checkAuth)
 server.engine('handlebars', exphbs({ defaultLayout: 'main'}))
 server.set('view engine', 'handlebars')
 
