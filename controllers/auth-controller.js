@@ -30,7 +30,7 @@ module.exports = (app) => {
                 //     res.render('signup-form', { err: "Passwords do not match" })
                 // }
 
-                var token = jwt.sign( { _id: user._id }, process.env.SECRET, { expires: "60 days"})
+                var token = jwt.sign( { _id: user._id }, process.env.SECRET, { expiresIn: "60 days"})
                 res.cookie('nToken', token, { maxAge: 900000, httpOnly: true })
                 res.redirect('/')
             })

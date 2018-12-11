@@ -68,6 +68,7 @@ server.listen(3000, () => {
 require('./controllers/posts-controller.js')(server)
 require('./controllers/comments-controller.js')(server)
 require('./controllers/auth-controller.js')(server)
+require('./controllers/replies-controller')(server)
 
 // SET DATABASE
 require('./data/reddit-clone-db')

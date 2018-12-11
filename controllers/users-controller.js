@@ -1,4 +1,4 @@
-const User = require('./models/user')
+const User = require('../models/user')
 
 module.exports = (app) => {
 
@@ -13,5 +13,5 @@ module.exports = (app) => {
           res.render('profile-show', { user, currentUser })
         })
   })
-  
+
 }

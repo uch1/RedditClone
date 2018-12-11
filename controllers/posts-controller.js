@@ -19,7 +19,7 @@ module.exports = (app) => {
                     user.posts.unshift(post)
                     user.save()
                     // Redirect to the new post 
-                    res.redirect(`/post/${post._id}`)
+                    res.redirect(`/posts/${post._id}`)
                 })
                 .catch(err => {
                     console.log("[/posts] Failed to create a post. Error message: ", err.message)
@@ -52,16 +52,17 @@ module.exports = (app) => {
     })
 
     // SHOW ONE POST
-    app.get('/posts/:id', (req, res) => {
+    app.get('/posts/:postId', (req, res) => {
         // Look up the post
         const currentUser = req.user 
 
-        console.log('hitting post :id')
-        Post.findById(req.params.id)
-            .populate('author')
-            .populate({ path: 'comments', populate: {path: 'author'} })
+        Post.findById(req.params.postId)
+            .populate('comments')
+            // .populate({ path: 'comments', populate: {path: 'author'} })
             .then(post => {
-                res.render("post-show", { post: post, currentUser })
+                console.log("CURRENT POST " + post)
+
+                res.render("post-show", { post: post})
             })
             .catch(err => {
                 console.log("[/posts/:id] Failed to show a post: ", err.message)
@@ -79,9 +80,41 @@ module.exports = (app) => {
           });
     });
 
+    // UPVOTE 
+    app.put("/posts/:id/vote-up", (req, res) => {
+        Post.findById(req.params.id)
+            .exec((err, post) => {
+                if (err) {
+                    return res.status(400)
+                }
+
+                post.voteScore += 1 
+                post.save()
+                return res.status(200) // Up Voting was succesful 
+            });
+    });
+
+    // DOWNVOTE 
+    app.put("/posts/:id/vote-down", (req, res) => {
+        Post.findById(req.params.id)
+            .exec((err, post) => {
+                if (err) {
+                    return res.status(400)
+                }
+                post.voteScore -= 1
+                post.save()
+                return res.status(200) // Down voting was successful
+            })
+    })
+
     // SHOW A NEW POST
     // app.get('/posts/new', (req, res) => {
     //     res.render('layouts/posts-new')
     // })
-
 }
+
+
+
+
+
+

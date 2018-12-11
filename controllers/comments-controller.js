@@ -6,6 +6,9 @@ module.exports = (app) => {
     // CREATE
     app.post('/posts/:postId/comments', (req, res) => {
         const comment = new Comment(req.body)
+        comment.author = req.params.postId
+        console.log("POST IDDDD " + comment)
+
 
         comment
             .save()
@@ -13,6 +16,7 @@ module.exports = (app) => {
                 return Post.findById(req.params.postId)
             })
             .then(post => {
+                console.log("COMMENT " + comment)
                 post.comments.unshift(comment)
                 post.save()
                 return res.redirect(`/posts/${req.params.postId}`)
@@ -22,6 +26,5 @@ module.exports = (app) => {
             })
     })
 
-    
 
 }
